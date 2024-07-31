@@ -1,0 +1,35 @@
+server:
+  port: 3001
+
+spring:
+  # 데이터베이스 설정
+  datasource:
+    driverClassName: '{cipher}ff8ef8169d1c3d5607fd208e5a036e4b0e590ea51f078ef62b678320325af2b7e848b026568c5001833ac3ec2e540554'
+    #driverClassName: oracle.jdbc.driver.OracleDriver #암호화할 클래스명
+    url: '{cipher}67250ea20eef911c55da72e66058e93b7bc1ba485284c63c0868d382588364aabe5b0f5a9fa14947ac8339e9bbfab238463452a81a06be150f5565c1cf97a2ed'
+    #url: jdbc:oracle:thin:@${db.host}:${db.port}:XE #암호화할 포트
+    username: ${db.username}
+    password: ${db.password}
+
+  # JPA 설정
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+    hibernate:
+      ddlAuto: create #작업에 따라 적절히 변경
+
+  # 파일 업로드 용량 설정
+  servlet:
+    multipart:
+      maxFileSize: 20MB
+      maxRequestSize: 60MB
+      fileSizeThreshold: 30MB
+
+# 로거 설정
+logging:
+  level:
+    org.hibernate.type: trace
+    org.hibernate.orm.jdbc.bind: trace

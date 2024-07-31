@@ -1,0 +1,21 @@
+#다른 설정 파일보다 가장 먼저 실행되는 설정 파일!
+server:
+  port: 3100
+
+spring:
+  application:
+    name: config-server #해당 이름으로 인스턴스를 찾기 때문에 잘 기억하기!
+
+  profiles:
+    active: native
+
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configs #설정 관리할 폴더 경로
+
+#암호화
+encrypt:
+  key: ${secretKey} #암호화할 키 값 환경 변수로 설정
+  #잊어버리지 않게 문서화 해두기..

@@ -1,0 +1,12 @@
+#개발 시 필요한 설정 분리
+#api는 라이브 리로드, 정적 자원 설정은 필요없음
+# 타임리프 사용 안함, 리액트 사용 안함
+
+# 파일 업로드 경로 설정
+file:
+  upload:
+    path: ${fileUpload.path} #환경변수로 설정
+    url: /upload/
+
+#    path: D:/uploads
+#    url: /upload/
