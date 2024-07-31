@@ -33,3 +33,17 @@ logging:
   level:
     org.hibernate.type: trace
     org.hibernate.orm.jdbc.bind: trace
+    
+# 유레카 설정
+#도메인 주소는 찾지 못하기 때문에 IP 주소로 탐색
+eureka:
+  instance:
+    preferIpAddress: true
+  
+  #API 서버가 유레카 서버를 찾아야 하기 때문에 true로 설정
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${eurekaHost}/eureka/
+  

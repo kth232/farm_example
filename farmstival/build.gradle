@@ -30,6 +30,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	//유레카 서버 추가
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap' //버전 명시 안해도 호환되는 최적화 버전 알아서 찾아줌
 	implementation 'org.springframework.cloud:spring-cloud-starter-config' //client config 추가해야 함
 
