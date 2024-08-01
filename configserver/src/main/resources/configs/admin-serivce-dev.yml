@@ -1,0 +1,17 @@
+#livereload, static resource 설정은 개발 시 필요함
+jpa:
+  # 라이브 리로드 설정
+  devtools:
+    livereload:
+      enabled: true
+
+  # 정적 자원 설정(CSS, JS, 이미지)
+  web:
+    resources:
+      staticLocations: file:src/main/resources/static/
+
+  #타임리프 설정
+  thymeleaf:
+    cache: true
+    prefix: file:src/main/resources/templates/
+    #prefix: classpath:/templates/ #해당 주소 적용 불가해서 수정해야 함

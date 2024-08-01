@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: admin-service #해당 이름으로 유레카 서버가 찾아줌
+
+  cloud:
+    config:
+      uri: ${configServerUrl}

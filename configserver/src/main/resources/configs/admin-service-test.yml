@@ -1,0 +1,14 @@
+spring:
+  # 데이터베이스 설정
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+
+#api-service-test와 설정이 동일함
+jpa:
+  # 라이브 리로드 설정
+  devtools:
+    livereload:
+      enabled: true

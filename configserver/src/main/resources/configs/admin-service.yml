@@ -1,6 +1,5 @@
-#리액트에서 작업할 백엔드 서버
 server:
-  port: 3001
+  port: 3002
 
 spring:
   # 데이터베이스 설정
@@ -29,18 +28,36 @@ spring:
       maxRequestSize: 60MB
       fileSizeThreshold: 30MB
 
+  # 정적 자원 설정(CSS, JS, 이미지)
+  web:
+    resources:
+      staticLocations: classpath:/static/
+      #staticLocations: file:src/main/resources/static/ #해당 주소로 배포하면 안되기 때문에 변경
+
+  #타임리프 설정
+  thymeleaf:
+    cache: true
+    prefix: classpath:/templates/
+
+
 # 로거 설정
 logging:
   level:
     org.hibernate.type: trace
     org.hibernate.orm.jdbc.bind: trace
-    
+
+#파일 업로드 경로 설정
+file:
+  upload:
+    path: ${file.path} #환경변수로 환경에 맞게 유연하게 사용
+    url: /upload/
+
 # 유레카 설정
 #도메인 주소는 찾지 못하기 때문에 IP 주소로 탐색
 eureka:
   instance:
     preferIpAddress: true
-  
+
   #API 서버가 유레카 서버를 찾아야 하기 때문에 true로 설정
   client:
     registerWithEureka: true
@@ -59,3 +76,4 @@ management:
     web:
       exposure:
         include: refresh, health #활성화
+
