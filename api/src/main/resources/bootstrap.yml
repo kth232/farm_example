@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: api-service #해당 이름으로 인스턴스 찾아옴
-
-  cloud:
-    config:
-      uri: ${configServerUrl} #추후 원격 서버로 변경할 것
