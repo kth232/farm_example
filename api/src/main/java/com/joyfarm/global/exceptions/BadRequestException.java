@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BadRequestException extends CommonException {
-    //예외 코드를 400d으로 고정
+    //예외 코드를 400으로 고정
 
     public BadRequestException(String message) {
         super(message, HttpStatus.BAD_REQUEST);

@@ -28,7 +28,8 @@ public class Utils { // 빈의 이름 - utils
         // FieldErrors
 
 
-        Map<String, List<String>> messages = errors.getFieldErrors()
+        Map<String, List<String>> messages = null;
+        messages = errors.getFieldErrors()
                 .stream()
                 .collect(Collectors.toMap(FieldError::getField, e -> getCodeMessages(e.getCodes())));
 

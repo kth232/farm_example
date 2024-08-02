@@ -19,12 +19,13 @@ public class MemberController {
     private final JoinValidator joinValidator;
     private final Utils utils;
 
-    @PostMapping//회원 가입
+    @PostMapping
     public ResponseEntity join(@RequestBody @Valid RequestJoin form, Errors errors) { //가입 시 응답 코드만 내보내기
 
         joinValidator.validate(form, errors);
 
         if(errors.hasErrors()) {
+            //errors.getAllErrors().stream().forEach(System.out::println);
             throw new BadRequestException(utils.getErrorMessages(errors));
         }
 
