@@ -8,5 +8,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class JwtProperties {
     private String secret; //검증을 위한 비밀번호
     private Integer validSeconds; //유효기간
-    
 }

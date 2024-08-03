@@ -64,3 +64,8 @@ management:
 jwt:
   secret: ${jwtSecret}
   validSeconds: ${jwtValidSeconds}
+
+#cors 설정
+cors:
+  allow:
+    origins: http://joyfarm.xyz #특정 도메인으로 한정

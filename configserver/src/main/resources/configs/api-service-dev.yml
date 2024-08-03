@@ -10,3 +10,8 @@ file:
 
 #    path: D:/uploads
 #    url: /upload/
+
+#cors 설정
+cors:
+  allow:
+    origins: '*' #개발 시에는 모두 허용해서 확인
