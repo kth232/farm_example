@@ -25,19 +25,19 @@ public class TokenProviderTest {
     void init() {
         form = new RequestJoin();
         form.setEmail("user01@test.org");
-        form.setPassword("_aA123456");
+        form.setPassword("User1234!");
         form.setConfirmPassword(form.getPassword());
         form.setMobile("010-1000-1000");
-        form.setUserName("사용자01");
+        form.setUserName("user01");
         form.setAgree(true);
         saveService.save(form);
     }
 
     @Test
     @DisplayName("토큰 발급 테스트")
-    @WithMockUser(username="user01@test.org", password="_aA123456", authorities = "USER")
+    @WithMockUser(username="user01@test.org", password="User1234!", authorities = "USER")
     void createTokenTest() {
-        String token = provider.createToken("user01@test.org", "_aA123456");
+        String token = provider.createToken("user01@test.org", "User1234!");
         System.out.println(token);
     }
 }

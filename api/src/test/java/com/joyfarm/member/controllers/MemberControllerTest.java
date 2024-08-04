@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -63,7 +64,7 @@ public class MemberControllerTest {
 
         mockMvc.perform(post("/account")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8)
+                        .characterEncoding(Charset.forName("UTF-8"))
                         .content(params)) //바디
                 .andDo(print());
     }
@@ -74,13 +75,13 @@ public class MemberControllerTest {
 
         RequestLogin loginForm = new RequestLogin();
         loginForm.setEmail(form.getEmail());
-        loginForm.setPassword(form.getPassword() + "****");
+        loginForm.setPassword(form.getPassword() /*+ "****"*/);
         //없을 시 메세지 출력되는 지도 확인
 
         String params = om.writeValueAsString(loginForm);
 
 
-        String body = mockMvc.perform(post("/account/token")
+        String body = mockMvc.perform(post("/account/token") //바디 데이터 반환
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(params)
                 ).andDo(print())
@@ -91,7 +92,7 @@ public class MemberControllerTest {
         String token = (String) data.getData();
 
         mockMvc.perform(get("/account/test1")
-                        .header("Authorization", "Bearer" + token))
+                        .header("Authorization", "Bearer " + token))
                 .andDo(print());
 
     }

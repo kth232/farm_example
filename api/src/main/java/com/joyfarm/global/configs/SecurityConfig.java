@@ -1,6 +1,5 @@
 package com.joyfarm.global.configs;
 
-import com.joyfarm.global.advices.CommonControllerAdvice;
 import com.joyfarm.member.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +25,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, CommonControllerAdvice commonControllerAdvice) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         //일반 웹페이지는 토큰 인증이 필요함, 다른 서버에서 데이터 요청받음
         //같은 출처(서버)에서 요청받은 데이터인지 검증
@@ -42,9 +41,13 @@ public class SecurityConfig {
                     h.accessDeniedHandler((req, res, e) -> res.sendError(HttpStatus.UNAUTHORIZED.value()));
                 })
                 .authorizeHttpRequests(c -> {
-                    c.requestMatchers("/account", "/account/token").permitAll() //회원가입, 로그인(토큰)은 모든 접근 가능
+                    c.requestMatchers(
+                            "/account",
+                                    "/account/token")
+                            .permitAll() //회원가입, 로그인(토큰)은 모든 접근 가능
                             .anyRequest().authenticated(); //그 외에는 인증 필요
                 });
+
         return http.build();
     }
 

@@ -52,12 +52,12 @@ public class MemberController {
 
     @GetMapping("/test1")
     public void memberOnly() {
-        log.info("회원전용!");
+        log.info("회원 전용");
     }
 
     @GetMapping("/test2")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public void adminOnly() {
-        log.info("관리자 전용!");
+        log.info("관리자 전용");
     }
 }
