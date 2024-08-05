@@ -11,7 +11,7 @@ import org.springframework.web.filter.CorsFilter;
 public class CorsFilterConfig {
     
     @Value("${cors.allow.origins}") //직접 설정할 수 있게 변수로 정의
-    private  String allowedOrigins;
+    private String allowedOrigins;
     
     //Cors 관련 헤더 - 응답 헤더 추가
     @Bean

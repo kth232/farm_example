@@ -82,7 +82,6 @@ public class MemberControllerTest {
 
         String params = om.writeValueAsString(loginForm);
 
-
         String body = mockMvc.perform(post("/account/token") //바디 데이터 반환
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(params)

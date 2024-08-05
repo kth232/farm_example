@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@RestControllerAdvice("com.jwt")
+@RestControllerAdvice("com.joyfarm")
 public class CommonControllerAdvice { //코드 형태로 에러 처리 가능함
 
     private final Utils utils;
