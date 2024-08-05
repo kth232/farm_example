@@ -30,8 +30,8 @@ spring:
 #eureka 설정
 eureka:
   instance:
-    #hostname: ${hostname}
-    preferIpAddress: true
+    hostname: ${hostname}
+    #preferIpAddress: true
 
   client:
     registerWithEureka: true

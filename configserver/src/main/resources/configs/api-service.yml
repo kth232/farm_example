@@ -39,8 +39,8 @@ logging:
 #도메인 주소는 찾지 못하기 때문에 IP 주소로 탐색
 eureka:
   instance:
-    #hostname: ${hostname} # 사설 ip 주소일 경우는 hostname으로 접근해야 함
-    preferIpAddress: true
+    hostname: ${hostname} # 사설 ip 주소일 경우는 hostname으로 접근해야 함
+    #preferIpAddress: true
   
   #API 서버가 유레카 서버를 찾아야 하기 때문에 true로 설정
   client:
