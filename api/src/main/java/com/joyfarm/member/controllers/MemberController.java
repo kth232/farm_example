@@ -44,7 +44,6 @@ public class MemberController {
             //검증 실패 시
             throw new BadRequestException(utils.getErrorMessages(errors));
         }
-
         String token = tokenProvider.createToken(form.getEmail(), form.getPassword());
 
         return new JSONData(token);

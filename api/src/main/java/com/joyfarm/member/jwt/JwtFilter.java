@@ -16,6 +16,9 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+// 스프링 시큐리티 내에서 사용하는 필터는 별도의 방식이 있다. 여기서 정의하고 추가하면 됨
+// 스프링 시큐리티에서는 필터 전, 후 등 특정 시점에 추가할 수 있는 기능이 있음
+// 그 점을 활용해서 토큰으로 로그인을 하고 로그인을 유지하는 방식을 기본 필터 전에 먼저 추가할 것임
 public class JwtFilter extends GenericFilterBean { //직접 필터를 정의할 수 있는 클래스
 
     private final TokenProvider provider;
@@ -43,7 +46,7 @@ public class JwtFilter extends GenericFilterBean { //직접 필터를 정의할 
 
     /**
      * 요청 헤더에서 JWT 토큰 추출
-     * 요청 헤더 Authorization: Bearer JWT토큰 값
+     * 요청 헤더 Authorization: Bearer JWT 토큰 값
      * @param request
      * @return
      */

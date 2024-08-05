@@ -47,6 +47,8 @@ public class MemberControllerTest {
         form.setUserName("user01");
         form.setMobile("010-1111-2222");
         form.setAgree(true);
+
+        saveService.save(form);
     }
 
     @Test
@@ -88,8 +90,8 @@ public class MemberControllerTest {
                         .andReturn().getResponse()
                         .getContentAsString(StandardCharsets.UTF_8);
 
-        JSONData data = om.readValue(body, JSONData.class);
-        String token = (String) data.getData();
+        JSONData data = om.readValue(body, JSONData.class); //JSON 데이터로 바꾸기
+        String token = (String)data.getData();
 
         mockMvc.perform(get("/account/test1")
                         .header("Authorization", "Bearer " + token))
