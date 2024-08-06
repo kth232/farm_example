@@ -20,6 +20,7 @@ public class Utils {
         List<ServiceInstance> instances = discoveryClient.getInstances("admin-service");
 
         return String.format("%s%s", instances.get(0).getUri().toString(), url);
+        //정적 경로
     }
     /*
     public String redirectUrl(String url) {
