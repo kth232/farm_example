@@ -21,7 +21,11 @@ public class CorsFilterConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedHeader("*"); //모든 요청 헤더 허용
         config.addAllowedMethod("*"); //모든 요청 메서드 허용
+        if (!allowedOrigins.equals("*")) {
+            config.setAllowCredentials(true);
+        };
         config.addAllowedOrigin(allowedOrigins);
+        config.addExposedHeader("*");
         //System.out.println("origins: "+ allowedOrigins);
         //실제로는 보안적으로 안전하도록 상세 설정을 통해 일부만 허용하도록 한정하는 것이 좋다
 

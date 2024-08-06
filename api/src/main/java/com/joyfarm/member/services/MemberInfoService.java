@@ -29,7 +29,6 @@ public class MemberInfoService implements UserDetailsService {
         if(tmp == null || tmp.isEmpty()) {
             tmp = List.of(Authorities.builder().member(member).authority(Authority.USER).build());
         }
-
         List<SimpleGrantedAuthority> authorities = tmp.stream()
                 .map(a->new SimpleGrantedAuthority(a.getAuthority().name())).toList();
 
