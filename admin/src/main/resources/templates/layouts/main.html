@@ -22,7 +22,7 @@
     <!--컨트롤러가 없는 경우 layout 블럭으로 내용 치환 정의-->
     <script th:src="${@utils.url('/js/common.js')}"></script>
 <!--    <script th:src="@{/front/js/common.js}"></script>-->
-    <script th:if="${addScript != null}" th:each="jsFile: ${addScript}"
+    <script th:if="${addScript != null}" th:each="jsFile : ${addScript}"
             th:src="${@utils.url(#strings.concat('/js/', jsFile, '.js'))}"></script>
     <th:block layout:fragment="addScript"></th:block>
 </head>
