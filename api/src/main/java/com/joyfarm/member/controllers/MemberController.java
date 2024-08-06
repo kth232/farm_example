@@ -5,6 +5,7 @@ import com.joyfarm.global.Utils;
 import com.joyfarm.global.exceptions.BadRequestException;
 import com.joyfarm.global.rests.JSONData;
 import com.joyfarm.member.jwt.TokenProvider;
+import com.joyfarm.member.services.MemberSaveService;
 import com.joyfarm.member.validators.JoinValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final JoinValidator joinValidator;
+    private final MemberSaveService saveService;
     private final TokenProvider tokenProvider;
     private final Utils utils;
 
@@ -37,6 +39,7 @@ public class MemberController {
             //errors.getAllErrors().stream().forEach(System.out::println);
             throw new BadRequestException(utils.getErrorMessages(errors));
         }
+        saveService.save(form);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

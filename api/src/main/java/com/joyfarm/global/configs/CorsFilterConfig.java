@@ -21,7 +21,7 @@ public class CorsFilterConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedHeader("*"); //모든 요청 헤더 허용
         config.addAllowedMethod("*"); //모든 요청 메서드 허용
-        if (!allowedOrigins.equals("*")) {
+        if (!allowedOrigins.equals("*")) { //config server, api.yml 설정
             config.setAllowCredentials(true);
         };
         config.addAllowedOrigin(allowedOrigins);
