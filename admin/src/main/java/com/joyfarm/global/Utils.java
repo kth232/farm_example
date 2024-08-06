@@ -20,7 +20,8 @@ public class Utils {
         List<ServiceInstance> instances = discoveryClient.getInstances("admin-service");
 
         return String.format("%s%s", instances.get(0).getUri().toString(), url);
-        //정적 경로
+        //인스턴스 실제 주소, html 타임리프 레이아웃 링크 주소가 매개변수로 유입됨
+        //반환값: admin의 실제 주소(3002) + 정적 경로(url)
     }
     /*
     public String redirectUrl(String url) {
