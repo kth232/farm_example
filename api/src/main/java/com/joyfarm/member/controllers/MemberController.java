@@ -4,6 +4,8 @@ package com.joyfarm.member.controllers;
 import com.joyfarm.global.Utils;
 import com.joyfarm.global.exceptions.BadRequestException;
 import com.joyfarm.global.rests.JSONData;
+import com.joyfarm.member.MemberInfo;
+import com.joyfarm.member.entities.Member;
 import com.joyfarm.member.jwt.TokenProvider;
 import com.joyfarm.member.services.MemberSaveService;
 import com.joyfarm.member.validators.JoinValidator;
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,14 @@ public class MemberController {
     private final MemberSaveService saveService;
     private final TokenProvider tokenProvider;
     private final Utils utils;
+
+    //로그인한 회원 정보 조회
+    @GetMapping
+    public JSONData info(@AuthenticationPrincipal MemberInfo memberInfo) {
+        Member member = memberInfo.getMember();
+
+        return new JSONData(member);
+    }
 
     /* 회원 가입 시 응답 코드 201 */
     @PostMapping // /account 쪽에 Post 방식으로 접근하면 -> 회원가입
