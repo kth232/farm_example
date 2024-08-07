@@ -1,71 +1,65 @@
 package com.joyfarm.member.controllers;
 
 
-import com.joyfarm.global.Utils;
-import com.joyfarm.global.exceptions.BadRequestException;
-import com.joyfarm.global.rests.JSONData;
-import com.joyfarm.member.jwt.TokenProvider;
+import com.joyfarm.global.exceptions.ExceptionProcessor;
 import com.joyfarm.member.services.MemberSaveService;
 import com.joyfarm.member.validators.JoinValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RestController
-@RequestMapping("/account")
+@Controller
+@RequestMapping("/member")
 @RequiredArgsConstructor
-public class MemberController {
+@SessionAttributes("requestLogin")
+public class MemberController implements ExceptionProcessor {
 
     private final JoinValidator joinValidator;
-    private final MemberSaveService saveService;
-    private final TokenProvider tokenProvider;
-    private final Utils utils;
+    private final MemberSaveService memberSaveService;
 
-    /* 회원 가입 시 응답 코드 201 */
-    @PostMapping // /account 쪽에 Post 방식으로 접근하면 -> 회원가입
-    public ResponseEntity join(@RequestBody @Valid RequestJoin form, Errors errors){
-        // 회원 가입 정보는 JSON 데이터로 전달 -> @RequestBody
-        //가입 시 응답 코드만 내보내기
+    @ModelAttribute
+    public RequestLogin requestLogin() {
+        return new RequestLogin();
+    }
+
+    @GetMapping("/join")
+    public String join(@ModelAttribute RequestJoin form) {
+
+        return "member/join";
+    }
+
+    @PostMapping("/join")
+    public String joinPs(@Valid RequestJoin form, Errors errors) {
 
         joinValidator.validate(form, errors);
 
-        if (errors.hasErrors()){
-            //errors.getAllErrors().stream().forEach(System.out::println);
-            throw new BadRequestException(utils.getErrorMessages(errors));
+        if (errors.hasErrors()) {
+            return "member/join";
         }
-        saveService.save(form);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        memberSaveService.save(form); // 회원 가입 처리
+
+        return "redirect:/member/login";
     }
 
-    //로그인 토큰으로 인증, post 방식으로 넘겨야 함<-RequestBody
-    /* 로그인 절차 완료 시 토큰(=교환권) 발급 */
-    @PostMapping("/token")
-    public JSONData token(@RequestBody @Valid RequestLogin form, Errors errors){
+    @GetMapping("/login")
+    public String login(@Valid @ModelAttribute RequestLogin form, Errors errors) {
+        String code = form.getCode();
+        if (StringUtils.hasText(code)) {
+            errors.reject(code, form.getDefaultMessage());
 
-        if (errors.hasErrors()){
-            //검증 실패 시
-            throw new BadRequestException(utils.getErrorMessages(errors));
+            // 비번 만료인 경우 비번 재설정 페이지 이동
+            if (code.equals("CredentialsExpired.Login")) {
+                return "redirect:/member/password/reset";
+            }
         }
-        String token = tokenProvider.createToken(form.getEmail(), form.getPassword());
 
-        return new JSONData(token); // 이상이 없으면 JSONData로 토큰 발급
+        return "member/login";
     }
 
-    @GetMapping("/test1")
-    public void memberOnly() {
-        log.info("user 전용");
-    }
-
-    @GetMapping("/test2")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public void adminOnly() {
-        log.info("admin 전용");
-    }
 }
