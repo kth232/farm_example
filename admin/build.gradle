@@ -32,6 +32,19 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.session:spring-session-data-redis' //session
 
+	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta' //querydsl
+	annotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
+
+	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'//javax->jakarta로 인식시킴
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+
+	//jwt 추가
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+	implementation 'org.modelmapper:modelmapper:3.2.1'
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -41,12 +54,11 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
+	testRuntimeOnly 'com.h2database:h2' //testRuntimeOnly로 수정
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
-
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
