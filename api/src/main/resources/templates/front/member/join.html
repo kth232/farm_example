@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/main}">
+
+    <!--치환되는 부분만 정의 가능,외부는 안됨-->
+    <main layout:fragment="content">
+        <h1 th:text="#{회원가입}"></h1>
+        <!--Join 커맨트 객체 연동-->
+        <form name="frmRegist" method="POST" th:action="@{/member/join}" autocomplete="off" th:object="${requestJoin}">
+            <!--스타일링을 위해 error 클래스 추가-->
+            <div class="error global" th:each="err: ${#fields.globalErrors()}" th:text="${err}"></div>
+
+            <dl>
+                <dt th:text="#{이메일}"></dt>
+                <dd>
+                    <!--th:field로 연동해야 알아서 인식 가능-->
+                    <input type="text" name="email" th:field="*{email}">
+                    <div class="error" th:each="err: ${#fields.errors('email')}" th:text="${err}"></div>
+                    <!--에러 메세지(for styling), 타임리프 파싱 에러 발생 시 오타(특히 중괄호 유무) 없는지 확인하기-->
+                </dd>
+            </dl>
+            <dl>
+                <dt th:text="#{비밀번호}"></dt>
+                <dd>
+                    <input type="password" name="password" th:field="*{password}">
+                    <div class="error" th:each="err: ${#fields.errors('password')}" th:text="${err}"></div>
+                </dd>
+            </dl>
+            <dl>
+                <dt th:text="#{비밀번호_확인}"></dt>
+                <!--이름 값에 공백 불가->_로 구분하기-->
+                <dd>
+                    <input type="password" name="confirmPassword" th:field="*{confirmPassword}">
+                    <div class="error" th:each="err: ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
+
+                </dd>
+            </dl>
+            <dl>
+                <dt th:text="#{회원명}"></dt>
+                <dd>
+                    <input type="text" name="userName" th:field="*{userName}">
+                    <div class="error" th:each="err: ${#fields.errors('userName')}" th:text="${err}"></div>
+                </dd>
+            </dl>
+            <dl>
+                <dt th:text="#{전화번호}"></dt>
+                <dd>
+                    <input type="text" name="mobile" th:field="*{mobile}">
+                    <div class="error" th:each="err: ${#fields.errors('mobile')}" th:text="${err}"></div>
+                </dd>
+            </dl>
+            <div class="terms">
+                <!--이름 값에 공백 불가->'_'로 채우기-->
+                <div class="tit" th:text="#{회원가입_약관}"></div>
+                <div class="terms-contents">회원가입 약관..</div>
+
+                <input type="checkbox" name="agree" value="true" id="agree" th:field="*{agree}">
+                <label for="agree" th:text="#{회원가입_약관_동의}"></label>
+                <div class="error" th:each="err: ${#fields.errors('agree')}" th:text="${err}"></div>
+            </div>
+            <div class="buttons">
+                <button type="reset" th:text="#{다시_입력}"></button>
+                <button type="submit" th:text="#{가입하기}"></button>
+            </div>
+        </form>
+    </main>
+</html>
