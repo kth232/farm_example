@@ -2,6 +2,8 @@ package com.joyfarm.global;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
@@ -13,18 +15,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
+@Component("utils")
 @RequiredArgsConstructor
 public class Utils { // 빈의 이름 - utils
 
     private final MessageSource messageSource;
     private final HttpServletRequest request;
+    private final DiscoveryClient discoveryClient;
 
-    public String toUpper(String str) {
-        return str.toUpperCase();
+    public String url(String url) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("front-service");
+
+        try {
+            return String.format("%s%s", instances.get(0).getUri().toString(), url);
+        } catch (Exception e) {
+            return String.format("%s://%s:%d%s%s", request.getScheme(), request.getServerName(), request.getServerPort(), request.getContextPath(), url);
+        }
     }
 
-    public Map<String, List<String>> getErrorMessages(Errors errors) {
+    public Map<String, List<String>> getErrorMessages(Errors errors) { //JSON 받을 때는 에러를 직접 가공
+        // FieldErrors
         // FieldErrors
 
         Map<String, List<String>> messages = errors.getFieldErrors()
@@ -71,5 +81,29 @@ public class Utils { // 빈의 이름 - utils
         List<String> messages = getCodeMessages(new String[] {code});
 
         return messages.isEmpty() ? code : messages.get(0);
+    }
+
+    /**
+     * 접속 장비가 모바일인지 체크
+     */
+    public boolean isMobile () {
+        //user-Agent 요청 헤더 정보
+        String ua = request.getHeader("User-Agent");
+        String pattern = ".(iPhone|iPod|iPad|BlackBerry|Android|Windows CE|LG|MOT|SAMSUNG|SonyEricsson).";
+        //패턴 일치 여부로 유저 접속 장비 정보 확인 가능
+
+        return ua.matches(pattern);
+    }
+
+    /**
+     * 모바일, PC 뷰 템플릿 경로 생성
+     *
+     * @param path
+     * @return
+     */
+    public String tpl(String path) {
+        String prefix = isMobile() ? "mobile/" : "front/";
+
+        return prefix + path;
     }
 }

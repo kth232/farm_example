@@ -1,8 +1,8 @@
 package com.joyfarm.member.controllers;
 
 
+import com.joyfarm.global.Utils;
 import com.joyfarm.global.exceptions.ExceptionProcessor;
-import com.joyfarm.member.MemberUtil;
 import com.joyfarm.member.services.MemberSaveService;
 import com.joyfarm.member.validators.JoinValidator;
 import jakarta.validation.Valid;
@@ -27,7 +27,7 @@ public class MemberController implements ExceptionProcessor {
 
     private final JoinValidator joinValidator;
     private final MemberSaveService memberSaveService;
-    private final MemberUtil memberUtil;
+    private final Utils utils;
 
     @ModelAttribute
     public RequestLogin requestLogin() {
@@ -39,7 +39,7 @@ public class MemberController implements ExceptionProcessor {
         commonProcess("join", model);
 
 
-        return "front/member/join";
+        return utils.tpl("member/join");
     }
 
     @PostMapping("/join")
@@ -69,7 +69,7 @@ public class MemberController implements ExceptionProcessor {
                 return "redirect:/member/password/reset ";
             }
         }
-        return "front/member/login";
+        return utils.tpl("member/login");
     }
 
     /**
