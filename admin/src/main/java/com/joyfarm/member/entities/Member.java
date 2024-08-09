@@ -1,5 +1,6 @@
 package com.joyfarm.member.entities;
 
+import com.joyfarm.file.entities.FileInfo;
 import com.joyfarm.global.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,6 +17,9 @@ public class Member extends BaseEntity {
     @GeneratedValue
     private Long seq;
 
+    @Column(length=45, nullable = false)
+    private String gid;
+
     @Column(length=65, unique = true, nullable = false)
     private String email;
 
@@ -31,4 +35,7 @@ public class Member extends BaseEntity {
     @ToString.Exclude
     @OneToMany(mappedBy = "member")
     private List<Authorities> authorities;
+
+    @Transient
+    private FileInfo profileImage; //2차 가공형태로 넣어줌
 }
