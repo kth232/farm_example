@@ -8,11 +8,12 @@ import lombok.*;
 import java.util.List;
 
 @Data
-@Entity
+@Entity //JPA에서만 사용함, persistence 패키지에 포함됨, redis와는 다른 기술
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member extends BaseEntity {
+    //데이터만 담아주는 데이터 클래스
     @Id
     @GeneratedValue
     private Long seq;

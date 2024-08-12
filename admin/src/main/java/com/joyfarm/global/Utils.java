@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component("utils")
@@ -31,6 +32,15 @@ public class Utils { // 빈의 이름 - utils
         } catch (Exception e) {
             return String.format("%s://%s:%d%s%s", request.getScheme(), request.getServerName(), request.getServerPort(), request.getContextPath(), url);
         }
+    }
+
+    public String redirectUrl(String url) {
+        String _fromGateway = Objects.requireNonNullElse(request.getHeader("from-gateway"), "false");
+        String gatewayHost = Objects.requireNonNullElse(request.getHeader("gateway-host"), "");
+        boolean fromGateway = _fromGateway.equals("true");
+
+        //게이트웨이를 통해서 주소 이동하도록 함
+        return fromGateway ? request.getScheme() + "://" + gatewayHost + "/admin" + url : request.getContextPath() + url;
     }
 
     public Map<String, List<String>> getErrorMessages(Errors errors) { //JSON 받을 때는 에러를 직접 가공
@@ -105,5 +115,25 @@ public class Utils { // 빈의 이름 - utils
         String prefix = isMobile() ? "mobile/" : "front/";
 
         return prefix + path;
+    }
+
+    /**
+     * 요청 데이터 단일 조회 편의 함수
+     *
+     * @param name
+     * @return
+     */
+    public String getParam(String name) {
+        return request.getParameter(name);
+    }
+
+    /**
+     * 요청 데이터 복수개 조회 편의 함수
+     *
+     * @param name
+     * @return
+     */
+    public String[] getParams(String name) {
+        return request.getParameterValues(name);
     }
 }
