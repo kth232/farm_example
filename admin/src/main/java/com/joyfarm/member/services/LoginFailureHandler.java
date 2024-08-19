@@ -1,17 +1,22 @@
 package com.joyfarm.member.services;
 
+import com.joyfarm.global.Utils;
 import com.joyfarm.member.controllers.RequestLogin;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.Setter;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import java.io.IOException;
 
+@Setter
 public class LoginFailureHandler implements AuthenticationFailureHandler {
+
+    private Utils utils;
 
     //로그인 실패 시에 유입 되는 메서드
     @Override
