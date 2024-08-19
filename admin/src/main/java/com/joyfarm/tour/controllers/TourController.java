@@ -26,7 +26,7 @@ public class TourController implements ExceptionProcessor {
         model.addAttribute("addCommonScript", List.of("map"));
         model.addAttribute("addScript", List.of("tour/view"));
 
-        return "front/tour/view";
+        return "tour/view";
     }
      */
 }
